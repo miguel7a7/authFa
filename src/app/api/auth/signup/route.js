@@ -19,7 +19,7 @@ export const POST = async (req) => {
       required_error: "El password es requerido",
       invalid_type_error: "debe contener letras y numeros como sugerencia",
     }),
-    email: z.string().email(),
+    email: z.string().email({ message: "Ingrese un email valido" }),
   });
 
   // validacion de lo enviado por el form con zod
@@ -28,10 +28,13 @@ export const POST = async (req) => {
   if (!response.success) {
     const { errors } = response.error;
 
-    return NextResponse.json({
-      ok: false,
-      message: errors[0].message,
-    });
+    return NextResponse.json(
+      {
+        ok: false,
+        message: errors[0].message,
+      },
+      { status: 409 }
+    );
   }
   // ===============================================
 
@@ -62,12 +65,21 @@ export const POST = async (req) => {
 
     const saveUser = await user.save();
 
-    return NextResponse.json(saveUser);
+    return NextResponse.json({
+      ok: true,
+      message: "Se registro correctamente",
+      saveUser,
+    });
   } catch (error) {
     console.log(error);
-    return NextResponse.json({
-      ok: false,
-      message: error.message,
-    });
+    if (error instanceof Error) {
+      return NextResponse.json(
+        {
+          ok: false,
+          message: error.message,
+        },
+        { status: 400 }
+      );
+    }
   }
 };

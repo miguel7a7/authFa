@@ -2,7 +2,7 @@ POST http://127.0.0.1:3000/api/auth/signup HTTP/1.1
 Content-Type: application/json
 
 {
-  "fullname":"Miguel Angel",
+  "fullname":"Sonia Marilyn Poma Quispe",
   "password": "12345",
-  "email": "mickmiguel05@gmail.com"
+  "email": "seniapq@gmail.com"
 }

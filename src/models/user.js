@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, models } from "mongoose";
 
 const UserSchema = new Schema({
   email: {
@@ -21,5 +21,5 @@ const UserSchema = new Schema({
   fecha_reg: { type: Date, default: Date.now },
 });
 
-const User = model.User || model("User", UserSchema);
+const User = models.User || model("User", UserSchema);
 export default User;
